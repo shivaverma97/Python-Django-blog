@@ -1,11 +1,23 @@
 {% extends "blog/base.html" %}
 {% block content %}
+    {% for post in posts|slice:":1" %}
+        <div class="content-section">
+            <div class="media">
+            <img class="rounded-circle account-img" src="{{ post.author.profile.image.url }}">
+            <div class="media-body">
+                <h2 class="account-heading">{{ post.author.username }}</h2>
+                <p class="text-secondary">{{ post.author.email }}</p>
+                <p class="text-secondary">Number of posts by {{  post.author.username }}: {{page_obj.paginator.count }}</p>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+    
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{% url 'User-posts' post.author.username %}">{{ post.author }}</a>
               <small class="text-muted">{{ post.date_posted }}</small>
             </div>
             <h2><a class="article-title" href="{% url 'Post-details' post.id %}">{{ post.title }}</a></h2>
